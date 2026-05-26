@@ -1,0 +1,15 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav [mode]="isDesktop() ? 'side' : 'over'" [opened]="opened()"
+        (openedChange)="opened.set($event)">
+        <jardin-menu [(opened)]="opened" [isDesktop]="isDesktop()"></jardin-menu>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <nav>
+            <jardin-header [(opened)]="opened"></jardin-header>
+        </nav>
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        * {
+            margin: 0;
+            font-family: "Montserrat", sans-serif;
+            box-sizing: border-box;
+        }
+
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            font-size: 12px;
+            line-height: 18px;
+            color: #555;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .panel {
+            margin-top: 15px;
+            break-inside: avoid;
+        }
+
+        .panel-titulo {
+            background: #4CAF50;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+        }
+
+        .panel-contenido {
+            border: 1px solid #4CAF50;
+            padding: 10px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .hgrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .dato {
+            display: flex;
+        }
+
+        .dato-label {
+            width: 100px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .dato-valor {
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .totales {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .totales strong {
+            color: #4CAF50;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <div class="header">
+            <div>
+                <h1 style="color: #4CAF50; margin: 0;">JardinPortal</h1>
+                <p>Cotización de Servicios</p>
+            </div>
+            <div style="text-align: right;">
+                <h3>N° {{id}}</h3>
+                <p>Fecha: {{formatearFecha creadoEn}}</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-titulo">Datos del Apoderado</div>
+            <div class="panel-contenido">
+                <div class="hgrid">
+                    <div class="dato">
+                        <div class="dato-label">RUT:</div>
+                        <div class="dato-valor">{{apoderado.rut}}</div>
+                    </div>
+                    <div class="dato">
+                        <div class="dato-label">Nombre:</div>
+                        <div class="dato-valor">{{apoderado.nombres}} {{apoderado.apellidoPaterno}}</div>
+                    </div>
+                    <div class="dato">
+                        <div class="dato-label">Teléfono:</div>
+                        <div class="dato-valor">{{apoderado.telefono}}</div>
+                    </div>
+                    <div class="dato">
+                        <div class="dato-label">Correo:</div>
+                        <div class="dato-valor">{{apoderado.correo}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-titulo">Datos del Niño/a</div>
+            <div class="panel-contenido">
+                <div class="hgrid">
+                    <div class="dato">
+                        <div class="dato-label">Nombre:</div>
+                        <div class="dato-valor">{{nino.nombres}} {{nino.apellidoPaterno}}</div>
+                    </div>
+                    <div class="dato">
+                        <div class="dato-label">RUT:</div>
+                        <div class="dato-valor">{{nino.rut}}</div>
+                    </div>
+                    <div class="dato">
+                        <div class="dato-label">Nivel:</div>
+                        <div class="dato-valor">{{contexto.nivelNombre}}</div>
+                    </div>
+                    <div class="dato">
+                        <div class="dato-label">Jornada:</div>
+                        <div class="dato-valor">{{contexto.jornadaNombre}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-titulo">Plan Seleccionado y Plan de Pago</div>
+            <div class="panel-contenido" style="padding: 0; border: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Servicio Cotizado</th>
+                            <th>Categoría</th>
+                            <th>Meses de Cobertura</th>
+                            <th style="text-align: right;">Precio Base</th>
+                            <th style="text-align: right;">Precio Final</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each items}}
+                        <tr>
+                            <td>{{nombre}}</td>
+                            <td>{{categoria}}</td>
+                            <td>{{../mesesContratados}}</td>
+                            <td style="text-align: right;">{{moneda}} {{monto precioBase}}</td>
+                            <td style="text-align: right;">{{moneda}} {{monto precioFinal}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="totales">
+            <div><strong>Plan de Pago:</strong> {{formaPago}} ({{mesesContratados}} meses)</div>
+            <div style="margin-top: 10px;">
+                Total a Pagar: <strong>{{moneda}} {{monto total}}</strong>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; text-align: center; color: #777; font-size: 10px;">
+            {{hoyLargo 'JardinPortal'}} - Cotización válida por 7 días.
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cotización</title>
+    <style>
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+        }
+        .content p {
+            margin-bottom: 20px;
+        }
+        .footer {
+            background-color: #f9f9f9;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eeeeee;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cotización Solicitada</h1>
+        </div>
+        <div class="content">
+            <p>Hola <strong>{{apoderado.nombres}}</strong>,</p>
+            <p>Adjunto a este correo encontrarás la cotización generada el <strong>{{formatearFecha creadoEn}}</strong>.</p>
+            <p>El plan cotizado es para el nivel <strong>{{contexto.nivelNombre}}</strong> en jornada <strong>{{contexto.jornadaNombre}}</strong>.</p>
+            <p>Hemos preparado este documento con el mayor detalle posible para responder a tus requerimientos.</p>
+            <p>Si tienes alguna duda o consulta adicional, no dudes en responder a este correo.</p>
+            <p>Atentamente,<br>El equipo de JardinPortal</p>
+        </div>
+        <div class="footer">
+            <p>&copy; JardinPortal. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>

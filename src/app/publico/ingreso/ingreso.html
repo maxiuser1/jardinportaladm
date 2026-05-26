@@ -1,0 +1,39 @@
+<section class="login-page">
+    <mat-card appearance="outlined" class="login-card">
+        <mat-card-header>
+            <mat-card-title>JardinPortal</mat-card-title>
+            <mat-card-subtitle>Ingresa tus credenciales para continuar</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formRoot]="form">
+                <mat-form-field class="full-width">
+                    <mat-label>Correo</mat-label>
+                    <input matInput type="email" [formField]="form.correo" placeholder="ejemplo@correo.com" />
+                    <mat-icon matPrefix>email</mat-icon>
+                    <mat-error errores [fieldState]="form.correo()"></mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Clave</mat-label>
+                    <input matInput [formField]="form.clave" [type]="hide() ? 'password' : 'text'"
+                        autocomplete="current-password" />
+                    <mat-icon matPrefix>lock</mat-icon>
+                    <button matIconButton matSuffix type="button" (click)="hide.set(!hide())"
+                        matTooltip="Mostrar/Ocultar clave">
+                        <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    <mat-error errores [fieldState]="form.clave()"></mat-error>
+                </mat-form-field>
+
+                <button mat-flat-button color="primary" [disabled]="form().submitting()" type="submit"
+                    class="submit-btn full-width">
+                    Iniciar Sesión
+                </button>
+            </form>
+        </mat-card-content>
+
+    </mat-card>
+
+    <p class="copyright">© 2026 Remait. Todos los derechos reservados.</p>
+</section>

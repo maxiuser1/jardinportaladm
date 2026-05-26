@@ -1,0 +1,8 @@
+<mat-form-field class="full-width">
+  <mat-label>RUT</mat-label>
+  <mat-icon matPrefix>fingerprint</mat-icon>
+  <input matInput type="text" [value]="value()" (input)="onInput($event)" (blur)="onBlur()" placeholder="12.345.678-9">
+  @if (isLoading()) {
+  <mat-spinner matSuffix [diameter]="20"></mat-spinner>
+  }
+</mat-form-field>

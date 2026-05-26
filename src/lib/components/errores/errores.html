@@ -1,0 +1,5 @@
+@if (fieldState().touched() && fieldState().errors(); as errors) {
+  @for (error of errors; track error) {
+    {{ error.message || getMessage(error.kind) }}
+  }
+}

@@ -1,0 +1,37 @@
+<h4>Dirección</h4>
+
+
+<div class="form-container">
+
+  <gcalle [formField]="form().calle" (direccionLocalizada)="onDireccionLocalizada($event)"></gcalle>
+
+  <mat-form-field>
+    <mat-label>Número</mat-label>
+    <input matInput [formField]="form().numero">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Depto / Interior</mat-label>
+    <input matInput placeholder="Ej: 302, Casa B" [formField]="form().interior">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Región</mat-label>
+    <mat-select [formField]="form().region" (selectionChange)="regionSelectedChanged()">
+      <mat-option value="">-- Seleccione Región --</mat-option>
+      @for (r of regiones; track r.region) {
+      <mat-option [value]="r.region">{{ r.region }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Comuna</mat-label>
+    <mat-select [formField]="form().comuna">
+      <mat-option value="">-- Seleccione Comuna --</mat-option>
+      @for (c of comunas(); track c) {
+      <mat-option [value]="c">{{ c }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>

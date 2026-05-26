@@ -1,0 +1,26 @@
+<mat-toolbar>
+  <button mat-icon-button class="xl-hidden" (click)="menued()" aria-label="Abrir menú">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="sm-hidden">Admin</span>
+  <span class="espaciador"></span>
+
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="Perfil de usuario">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #profileMenu="matMenu" xPosition="before">
+  <button mat-menu-item disabled class="menu-user-header">
+    <span matMenuItemLabel>
+      <strong>{{ store.nombres() }}</strong>
+      <small>{{ store.correo() }}</small>
+    </span>
+  </button>
+  <mat-divider />
+  <button mat-menu-item (click)="cerrarSesion()">
+    <mat-icon matMenuItemIcon>logout</mat-icon>
+    <span matMenuItemLabel>Cerrar sesión</span>
+  </button>
+</mat-menu>

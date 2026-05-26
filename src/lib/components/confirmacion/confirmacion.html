@@ -1,0 +1,19 @@
+<h6 mat-dialog-title>{{ data.title || 'Información' }}</h6>
+<mat-dialog-content>
+  <p>{{ data.message }}</p>
+
+  @if (data.comment) {
+    <mat-form-field class="dialog-field">
+      <mat-label>Comentario / Observación</mat-label>
+      <textarea matInput [(ngModel)]="comment" rows="3"></textarea>
+    </mat-form-field>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  @if (data.showCancel || data.comment) {
+    <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  }
+  <button mat-flat-button color="primary" [mat-dialog-close]="data.comment ? { comment } : true">
+    {{ data.confirmText || 'Aceptar' }}
+  </button>
+</mat-dialog-actions>

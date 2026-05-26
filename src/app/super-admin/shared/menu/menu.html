@@ -1,0 +1,19 @@
+<header>
+  <mat-icon>eco</mat-icon>
+  <span>Admin</span>
+</header>
+
+<mat-nav-list>
+  <div mat-subheader class="menu-segment-title">General</div>
+  <a mat-list-item routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+    (click)="redireccionar('/')">
+    <mat-icon matListItemIcon>home</mat-icon>
+    <span matListItemTitle>Inicio</span>
+  </a>
+  <a mat-list-item routerLink="/ninos" routerLinkActive="active-link" (click)="redireccionar('/ninos')">
+    <mat-icon matListItemIcon>child_care</mat-icon>
+    <span matListItemTitle>Tenants</span>
+  </a>
+
+
+</mat-nav-list>

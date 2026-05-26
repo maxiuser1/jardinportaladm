@@ -1,0 +1,14 @@
+<mat-form-field class="full-width">
+    <mat-label>Buscar dirección</mat-label>
+    <input matInput [value]="value()" [matAutocomplete]="auto" placeholder="Ej: Los Leones, Providencia"
+        (input)="onCalleInput($event)" />
+    <mat-autocomplete #auto="matAutocomplete">
+        @for (sug of sugerenciasCalle()?.suggestions; track sug.placePrediction.placeId) {
+        <mat-option [value]="sug.placePrediction.structuredFormat.mainText.text"
+            (onSelectionChange)="onOptionSelected($event, sug)">
+            {{ sug.placePrediction.structuredFormat.mainText.text }}, {{
+            sug.placePrediction.structuredFormat.secondaryText.text }}
+        </mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>
