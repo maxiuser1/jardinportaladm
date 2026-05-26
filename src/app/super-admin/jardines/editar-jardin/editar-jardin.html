@@ -1,0 +1,105 @@
+<div class="page-container">
+  <div class="header-section">
+    <button mat-icon-button routerLink="/jardines" aria-label="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h1 class="page-title">Editar Jardín</h1>
+      <p class="page-subtitle">Modifica los datos comerciales, de facturación y configuración del jardín.</p>
+    </div>
+  </div>
+
+  @if (cargandoInicial()) {
+    <div class="loading-state">
+      <mat-spinner diameter="50"></mat-spinner>
+      <span>Cargando datos del jardín...</span>
+    </div>
+  } @else {
+    @if (cargando()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <form [formRoot]="form" (submit)="onSubmit($event)">
+          <div class="form-grid">
+            
+            <!-- Información Básica -->
+            <div class="section-title-container">
+              <h2 class="form-section-title">Información Comercial</h2>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nombre Comercial</mat-label>
+              <input matInput [formField]="form.nombreComercial" placeholder="Ej. Jardín San Nicolas" />
+              <mat-error errores [fieldState]="form.nombreComercial()"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>ID / Slug (Solo Lectura)</mat-label>
+              <input matInput [value]="jardinId" readonly disabled />
+              <mat-hint>El identificador único no se puede modificar.</mat-hint>
+            </mat-form-field>
+
+            <!-- Datos de Facturación -->
+            <div class="section-title-container">
+              <h2 class="form-section-title">Datos de Facturación</h2>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Razón Social</mat-label>
+              <input matInput [formField]="form.razonSocial" placeholder="Ej. Corporación Educativa San Nicolas S.A." />
+              <mat-error errores [fieldState]="form.razonSocial()"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>RUC / Identificador Fiscal</mat-label>
+              <input matInput [formField]="form.ruc" placeholder="Ej. 20123456789" />
+              <mat-error errores [fieldState]="form.ruc()"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Correo de Facturación</mat-label>
+              <input matInput type="email" [formField]="form.correoFacturacion" placeholder="facturas@jardin.com" />
+              <mat-error errores [fieldState]="form.correoFacturacion()"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Responsable de Pago</mat-label>
+              <input matInput [formField]="form.responsablePago" placeholder="Ej. Administración / Director" />
+              <mat-error errores [fieldState]="form.responsablePago()"></mat-error>
+            </mat-form-field>
+
+            <!-- Configuración -->
+            <div class="section-title-container">
+              <h2 class="form-section-title">Configuración del Servicio</h2>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Moneda de Cobro</mat-label>
+              <mat-select [formField]="form.moneda">
+                <mat-option value="CLP">CLP (Pesos Chilenos)</mat-option>
+                <mat-option value="UF">UF (Unidad de Fomento)</mat-option>
+              </mat-select>
+              <mat-error errores [fieldState]="form.moneda()"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Días de Vigencia de Cotización</mat-label>
+              <input matInput type="number" [formField]="form.vigenciaCotizacion" placeholder="Ej. 15" />
+              <mat-error errores [fieldState]="form.vigenciaCotizacion()"></mat-error>
+            </mat-form-field>
+
+          </div>
+
+          <div class="form-actions">
+            <button mat-stroked-button type="button" routerLink="/jardines">Cancelar</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!form().valid() || cargando()">
+              Guardar Cambios
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

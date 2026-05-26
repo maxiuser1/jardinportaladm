@@ -1,1 +1,30 @@
-<p>inicio works!</p>
+<div class="welcome-container">
+  <div class="welcome-header">
+    <h1 class="welcome-title">Bienvenido a JardinPortal</h1>
+    <p class="welcome-subtitle">Panel de control de Super Administrador para la gestión de jardines y convenios.</p>
+  </div>
+
+  <div class="actions-grid">
+    <mat-card appearance="outlined" class="action-card" routerLink="/jardines/crear">
+      <mat-card-content>
+        <div class="card-icon-wrapper create-jardin">
+          <mat-icon>domain_add</mat-icon>
+        </div>
+        <h2 class="card-title">Nuevo Jardín</h2>
+        <p class="card-description">Registra un nuevo jardín en la plataforma con sus datos comerciales y de facturación.</p>
+        <button mat-flat-button color="primary">Crear Jardín</button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="action-card" routerLink="/jardines">
+      <mat-card-content>
+        <div class="card-icon-wrapper list-jardines">
+          <mat-icon>list_alt</mat-icon>
+        </div>
+        <h2 class="card-title">Lista de Jardines</h2>
+        <p class="card-description">Visualiza, edita y administra todos los jardines registrados y sus convenios activos.</p>
+        <button mat-stroked-button color="primary">Ver Listado</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

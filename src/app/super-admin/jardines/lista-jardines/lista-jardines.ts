@@ -31,4 +31,12 @@ export class ListaJardines {
   verDetalle(id: string) {
     this.router.navigate(['/jardines', id]);
   }
+
+  crearJardin() {
+    this.router.navigate(['/jardines/crear']);
+  }
+
+  editarJardin(id: string) {
+    this.router.navigate(['/jardines', id, 'editar']);
+  }
 }
