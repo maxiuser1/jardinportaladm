@@ -21,5 +21,6 @@ export type Jardin = {
         primary: string;
         secondary: string;
         accent: string;
-    }
+    },
+    vigenciaCotizacion: number,
 }

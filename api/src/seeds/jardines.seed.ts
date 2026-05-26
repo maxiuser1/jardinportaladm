@@ -37,7 +37,8 @@ export const seedJardinInabif: Jardin = {
         primary: "#4f46e5",
         secondary: "#0f172a",
         accent: "#22c55e"
-    }
+    },
+    vigenciaCotizacion: 30,
 };
 
 export const seedJardinSanJuan: Jardin = {
@@ -60,5 +61,6 @@ export const seedJardinSanJuan: Jardin = {
         primary: "#f97316",
         secondary: "#1f2937",
         accent: "#ec4899"
-    }
+    },
+    vigenciaCotizacion: 15,
 };

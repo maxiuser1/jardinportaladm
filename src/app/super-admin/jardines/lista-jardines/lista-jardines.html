@@ -1,0 +1,80 @@
+<div class="page-container">
+  <div class="header-section">
+    <h1 class="page-title">Administración de Jardines</h1>
+    <p class="page-subtitle">Gestiona los jardines y convenios empresariales activos en la plataforma.</p>
+  </div>
+
+  @if (jardinesResource.isLoading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="50"></mat-spinner>
+      <span>Cargando jardines...</span>
+    </div>
+  } @else if (jardinesResource.error()) {
+    <mat-card appearance="outlined" class="error-card">
+      <mat-card-content>
+        <mat-icon color="warn">error</mat-icon>
+        <p>Ocurrió un error al cargar la lista de jardines. Por favor, reintenta más tarde.</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        @if (jardinesResource.value() && jardinesResource.value()!.length > 0) {
+          <table mat-table [dataSource]="jardinesResource.value() || []">
+            
+            <ng-container matColumnDef="nombreComercial">
+              <th mat-header-cell *matHeaderCellDef>Nombre Comercial</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="jardin-name">{{ row.nombreComercial }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="razonSocial">
+              <th mat-header-cell *matHeaderCellDef>Razón Social</th>
+              <td mat-cell *matCellDef="let row">{{ row.razonSocial }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ruc">
+              <th mat-header-cell *matHeaderCellDef>RUC</th>
+              <td mat-cell *matCellDef="let row" class="monospace">{{ row.ruc }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="planVigente">
+              <th mat-header-cell *matHeaderCellDef>Plan Vigente</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="plan-badge">{{ row.planVigente }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="status-badge" [class]="row.estado.toLowerCase()">
+                  {{ row.estado }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef>Acciones</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-stroked-button color="primary" (click)="verDetalle(row.id)">
+                  <mat-icon>visibility</mat-icon>
+                  Ver detalles
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        } @else {
+          <div class="empty-state">
+            <mat-icon>domain_disabled</mat-icon>
+            <p>No se encontraron jardines registrados en el sistema.</p>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,202 @@
+<div class="page-container">
+  <div class="header-section">
+    <button mat-icon-button routerLink="/jardines" aria-label="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <h1 class="page-title">Detalle del Jardín</h1>
+      <p class="page-subtitle">Información detallada, configuración de estilos y convenios activos.</p>
+    </div>
+  </div>
+
+  @if (jardinResource.isLoading()) {
+  <div class="loading-state">
+    <mat-spinner diameter="50"></mat-spinner>
+    <span>Cargando información del jardín...</span>
+  </div>
+  } @else if (jardinResource.error()) {
+  <mat-card appearance="outlined" class="error-card">
+    <mat-card-content>
+      <mat-icon color="warn">error</mat-icon>
+      <p>Ocurrió un error al cargar el detalle del jardín. Por favor, reintenta más tarde.</p>
+    </mat-card-content>
+  </mat-card>
+  } @else if (jardinResource.value() && jardinResource.value()!.vm) {
+  @let vm = jardinResource.value()!.vm;
+
+  <div class="details-grid">
+
+    <!-- Columna Principal -->
+    <div class="main-column">
+      <mat-card appearance="outlined" class="info-card">
+        <mat-card-header>
+          <mat-card-title>Información General</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Nombre Comercial</span>
+              <span class="info-value highlight">{{ vm.nombreComercial }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Razón Social</span>
+              <span class="info-value">{{ vm.razonSocial }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">RUC</span>
+              <span class="info-value monospace">{{ vm.ruc }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Responsable de Pago</span>
+              <span class="info-value">{{ vm.responsablePago }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Correo de Facturación</span>
+              <span class="info-value">{{ vm.correoFacturacion }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Moneda de Cobro</span>
+              <span class="info-value bold">{{ vm.moneda }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Vigencia de Cotización</span>
+              <span class="info-value">{{ vm.vigenciaCotizacion }} días</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Creado el</span>
+              <span class="info-value">{{ vm.creadoEn | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            @if (vm.actualizadoEn) {
+            <div class="info-item">
+              <span class="info-label">Actualizado el</span>
+              <span class="info-value">{{ vm.actualizadoEn | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="outlined" class="plan-card">
+        <mat-card-header>
+          <mat-card-title>Suscripción y Estado</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="plan-grid">
+            <div class="info-item">
+              <span class="info-label">Plan Vigente</span>
+              <span class="plan-badge">{{ vm.planVigente }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Estado</span>
+              <span class="status-badge" [class]="vm.estado.toLowerCase()">{{ vm.estado }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Inicio del Plan</span>
+              <span class="info-value">{{ vm.fechaInicioPlan | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Fin del Plan</span>
+              <span class="info-value">{{ vm.fechaFinPlan | date: 'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Columna Secundaria -->
+    <div class="side-column">
+      <mat-card appearance="outlined" class="brand-card">
+        <mat-card-header>
+          <mat-card-title>Identidad Visual</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (vm.estilos) {
+          <div class="brand-content">
+            @if (vm.estilos.rutaLogo) {
+            <div class="logo-preview-container">
+              <span class="info-label">Logo del Jardín</span>
+              <img [src]="vm.estilos.rutaLogo" alt="Logo {{ vm.nombreComercial }}" class="logo-img" />
+            </div>
+            }
+
+            <mat-divider></mat-divider>
+
+            <div class="colors-container">
+              <span class="info-label">Paleta de Colores</span>
+              <div class="colors-row">
+                <div class="color-item">
+                  <div class="color-circle" [style.background-color]="vm.estilos.primary"></div>
+                  <span class="color-name">Primario</span>
+                  <span class="color-hex">{{ vm.estilos.primary }}</span>
+                </div>
+                <div class="color-item">
+                  <div class="color-circle" [style.background-color]="vm.estilos.secondary"></div>
+                  <span class="color-name">Secundario</span>
+                  <span class="color-hex">{{ vm.estilos.secondary }}</span>
+                </div>
+                <div class="color-item">
+                  <div class="color-circle" [style.background-color]="vm.estilos.accent"></div>
+                  <span class="color-name">Acento</span>
+                  <span class="color-hex">{{ vm.estilos.accent }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          } @else {
+          <div class="empty-brand">
+            <mat-icon>palette_off</mat-icon>
+            <p>No se han configurado estilos de marca personalizados para este jardín.</p>
+          </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Convenios / Intermediarios Section -->
+  <mat-card appearance="outlined" class="convenios-card">
+    <mat-card-header>
+      <mat-card-title>Convenios Empresariales (Intermediarios)</mat-card-title>
+      <mat-card-subtitle>Empresas e instituciones con convenios de matrícula y pago asociados.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      @if (vm.intermediarios && vm.intermediarios.length > 0) {
+      <table mat-table [dataSource]="vm.intermediarios">
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Convenio / Empresa</th>
+          <td mat-cell *matCellDef="let row" class="bold">{{ row.nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="contactoNombre">
+          <th mat-header-cell *matHeaderCellDef>Contacto</th>
+          <td mat-cell *matCellDef="let row">{{ row.contactoNombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="contactoEmail">
+          <th mat-header-cell *matHeaderCellDef>Correo Electrónico</th>
+          <td mat-cell *matCellDef="let row" class="monospace">{{ row.contactoEmail }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="status-badge" [class]="row.estado.toLowerCase()">
+              {{ row.estado }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      } @else {
+      <div class="empty-state">
+        <mat-icon>handshake</mat-icon>
+        <p>Este jardín no posee convenios empresariales activos registrados.</p>
+      </div>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
