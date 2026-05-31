@@ -1,0 +1,69 @@
+<div class="page-container">
+  <div class="header-section">
+    <div>
+      <h1 class="page-title">Valores UF (Chile)</h1>
+      <p class="page-subtitle">Visualiza y actualiza los valores históricos de la Unidad de Fomento (UF) para Chile.</p>
+    </div>
+    <button mat-flat-button color="primary" (click)="cargarValores()">
+      <mat-icon>refresh</mat-icon>
+      Cargar valores
+    </button>
+  </div>
+
+  @if (ufsResource.isLoading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="50"></mat-spinner>
+      <span>Cargando valores de UF...</span>
+    </div>
+  } @else if (ufsResource.error()) {
+    <mat-card appearance="outlined" class="error-card">
+      <mat-card-content>
+        <mat-icon color="warn">error</mat-icon>
+        <p>Ocurrió un error al cargar la lista de UFs. Por favor, reintenta más tarde.</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        @if (ufsResource.value() && ufsResource.value()!.length > 0) {
+          <table mat-table [dataSource]="getUfsSorted()">
+            
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef>Fecha</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="monospace">{{ formatIdToDate(row.id) }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="valor">
+              <th mat-header-cell *matHeaderCellDef>Valor</th>
+              <td mat-cell *matCellDef="let row">
+                <strong>{{ row.valor | number:'1.2-2' }}</strong>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tenant">
+              <th mat-header-cell *matHeaderCellDef>Tenant</th>
+              <td mat-cell *matCellDef="let row">{{ row.tenant }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef>Tipo</th>
+              <td mat-cell *matCellDef="let row">
+                <span class="status-badge active">{{ row.tipo }}</span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        } @else {
+          <div class="empty-state">
+            <mat-icon>trending_down</mat-icon>
+            <p>No se encontraron registros de UF en el sistema. Presiona "Cargar valores" para importarlos.</p>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

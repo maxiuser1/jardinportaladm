@@ -10,4 +10,5 @@ export const Contenedores = {
   SUCURSALES: 'sucursales',
   JARDINES: 'jardines',
   USUARIOS: 'usuarios',
+  SECUENCIAS: 'secuencias',
 } as const;

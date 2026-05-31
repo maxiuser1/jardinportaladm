@@ -4,6 +4,9 @@ import { Contenedores } from '../aplicacion/helpers/contenedores';
 import { obtenerSession } from '../aplicacion/helpers/auth';
 import { Jardin } from '../model/jardin';
 import { JardinPostVm } from '../model/vm/adm/jardin-post-vm';
+import { Usuario } from '../model/usuario';
+import { Secuencia } from '../model/secuencia';
+import { randomUUID } from 'crypto';
 
 export async function admJardinPost(
     request: HttpRequest,
@@ -16,7 +19,10 @@ export async function admJardinPost(
         }
 
         const vm = (await request.json()) as JardinPostVm;
-        if (!vm.id || !vm.nombreComercial || !vm.razonSocial || !vm.ruc || !vm.correoFacturacion || !vm.responsablePago || !vm.moneda || vm.vigenciaCotizacion === undefined) {
+        if (
+            !vm.id || !vm.nombreComercial || !vm.razonSocial || !vm.ruc || !vm.correoFacturacion || !vm.responsablePago || !vm.moneda || vm.vigenciaCotizacion === undefined ||
+            !vm.usuarioNombres || !vm.usuarioApellidos || !vm.usuarioCorreo || !vm.usuarioClave
+        ) {
             return { status: 400, jsonBody: { error: 'Faltan campos obligatorios' } };
         }
 
@@ -26,6 +32,18 @@ export async function admJardinPost(
         const { resource: existingJardin } = await container.item(vm.id, vm.id).read<Jardin>();
         if (existingJardin) {
             return { status: 409, jsonBody: { error: 'Ya existe un jardín con ese ID/Slug' } };
+        }
+
+        // Check if user already exists
+        const userContainer = database.container(Contenedores.USUARIOS);
+        const query = `SELECT * FROM c WHERE c.contacto.correo = @correo`;
+        const { resources: existingUsers } = await userContainer.items.query<Usuario>({
+            query,
+            parameters: [{ name: "@correo", value: vm.usuarioCorreo.toLowerCase().trim() }]
+        }).fetchAll();
+
+        if (existingUsers.length > 0) {
+            return { status: 409, jsonBody: { error: 'Ya existe un usuario con ese correo electrónico' } };
         }
 
         const nuevoJardin: Jardin = {
@@ -46,11 +64,46 @@ export async function admJardinPost(
             vigenciaCotizacion: vm.vigenciaCotizacion,
         };
 
+        const nuevoUsuario: Usuario = {
+            id: `usr-${randomUUID()}`,
+            tenant: vm.id,
+            tipo: 'usuario',
+            nombres: vm.usuarioNombres,
+            apellidos: vm.usuarioApellidos,
+            sucursales: [],
+            contacto: {
+                correo: vm.usuarioCorreo.toLowerCase().trim(),
+            },
+            autenticacion: {
+                clave: vm.usuarioClave,
+                bloqueado: false,
+                estado: 'VERIFICADO',
+                roles: ['supervisor', 'ejecutivo'],
+            },
+            estado: 'ACTIVO',
+            creadoEn: new Date().toISOString(),
+        };
+
+        const secuenciasContainer = database.container(Contenedores.SECUENCIAS);
+        const secuenciaMatriculas: Secuencia = {
+            id: 'matriculas',
+            tenant: nuevoJardin.id,
+            va: 0,
+        };
+        const secuenciaCotizaciones: Secuencia = {
+            id: 'cotizaciones',
+            tenant: nuevoJardin.id,
+            va: 0,
+        };
+
         await container.items.create(nuevoJardin);
+        await userContainer.items.create(nuevoUsuario);
+        await secuenciasContainer.items.create(secuenciaMatriculas);
+        await secuenciasContainer.items.create(secuenciaCotizaciones);
 
         return { status: 201, jsonBody: { success: true, id: nuevoJardin.id } };
     } catch (error: any) {
-        context.error('Error creating jardin:', error);
+        context.error('Error creating jardin and user:', error);
         return {
             status: 500,
             jsonBody: { error: error.message },

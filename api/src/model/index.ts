@@ -16,3 +16,4 @@ export * from './nivel';
 export * from './sala';
 export * from './roles';
 export * from './direccion';
+export * from './secuencia';

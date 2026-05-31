@@ -7,6 +7,10 @@ export type CrearJardinForm = {
   responsablePago: string;
   moneda: 'CLP' | 'UF' | '';
   vigenciaCotizacion: number;
+  usuarioNombres: string;
+  usuarioApellidos: string;
+  usuarioCorreo: string;
+  usuarioClave: string;
 };
 
 export const CREAR_JARDIN_DEFAULT: CrearJardinForm = {
@@ -18,4 +22,8 @@ export const CREAR_JARDIN_DEFAULT: CrearJardinForm = {
   responsablePago: '',
   moneda: '',
   vigenciaCotizacion: 15,
+  usuarioNombres: '',
+  usuarioApellidos: '',
+  usuarioCorreo: '',
+  usuarioClave: '',
 };
