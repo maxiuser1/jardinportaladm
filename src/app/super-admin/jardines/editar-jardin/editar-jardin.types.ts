@@ -6,6 +6,8 @@ export type EditarJardinForm = {
   responsablePago: string;
   moneda: 'CLP' | 'UF' | '';
   vigenciaCotizacion: number;
+  periodoDesde: string;
+  periodoHasta: string;
 };
 
 export const EDITAR_JARDIN_DEFAULT: EditarJardinForm = {
@@ -16,4 +18,6 @@ export const EDITAR_JARDIN_DEFAULT: EditarJardinForm = {
   responsablePago: '',
   moneda: '',
   vigenciaCotizacion: 15,
+  periodoDesde: '01-01',
+  periodoHasta: '31-12',
 };

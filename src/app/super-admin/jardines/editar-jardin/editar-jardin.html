@@ -90,6 +90,71 @@
               <mat-error errores [fieldState]="form.vigenciaCotizacion()"></mat-error>
             </mat-form-field>
 
+            <!-- Periodo Lectivo / Operativo -->
+            <div class="section-title-container">
+              <h2 class="form-section-title">Periodo de Operación / Lectivo</h2>
+            </div>
+
+            <div class="periodo-container full-width">
+              <div class="periodo-row">
+                <div class="periodo-col">
+                  <span class="periodo-col-title">Inicio del Periodo (Desde)</span>
+                  <div class="periodo-fields">
+                    <mat-form-field appearance="outline" class="periodo-dia">
+                      <mat-label>Día</mat-label>
+                      <mat-select [value]="diaDesde()" (selectionChange)="onDiaDesdeChange($event.value)">
+                        @for (d of dias; track d) {
+                          <mat-option [value]="d">{{ d < 10 ? '0' + d : d }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="periodo-mes">
+                      <mat-label>Mes</mat-label>
+                      <mat-select [value]="mesDesde()" (selectionChange)="onMesDesdeChange($event.value)">
+                        @for (m of mesesInicio; track m.valor) {
+                          <mat-option [value]="m.valor">{{ m.nombre }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="periodo-col">
+                  <span class="periodo-col-title">Fin del Periodo (Hasta)</span>
+                  <div class="periodo-fields">
+                    <mat-form-field appearance="outline" class="periodo-dia">
+                      <mat-label>Día</mat-label>
+                      <mat-select [value]="diaHasta()" (selectionChange)="onDiaHastaChange($event.value)">
+                        @for (d of dias; track d) {
+                          <mat-option [value]="d">{{ d < 10 ? '0' + d : d }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="periodo-mes">
+                      <mat-label>Mes</mat-label>
+                      <mat-select [value]="mesHasta()" (selectionChange)="onMesHastaChange($event.value)">
+                        @for (m of mesesFin; track m.valor) {
+                          <mat-option [value]="m.valor">{{ m.nombre }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <div class="periodo-summary">
+                <mat-icon class="summary-icon">date_range</mat-icon>
+                <span>
+                  Periodo configurado: <strong>{{ form.periodoDesde().value() }}</strong> hasta <strong>{{ form.periodoHasta().value() }}</strong>
+                  @if (esPeriodoTraslapado()) {
+                    <em>(se traslapa al año siguiente)</em>
+                  }
+                </span>
+              </div>
+            </div>
+
           </div>
 
           <div class="form-actions">

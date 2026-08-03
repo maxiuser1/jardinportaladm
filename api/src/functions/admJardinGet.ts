@@ -32,8 +32,8 @@ export async function admJardinGet(
 
         const vm: JardinDetalleVm = {
             id: jardin.id,
-            creadoEn: jardin.creadoEn,
-            actualizadoEn: jardin.actualizadoEn || null,
+            creado: jardin.creado || (jardin as any).creadoEn || new Date().toISOString(),
+            actualizado: jardin.actualizado ?? (jardin as any).actualizadoEn ?? null,
             nombreComercial: jardin.nombreComercial,
             razonSocial: jardin.razonSocial,
             ruc: jardin.ruc,
@@ -52,6 +52,7 @@ export async function admJardinGet(
                 accent: jardin.estilos.accent,
             } : null,
             vigenciaCotizacion: jardin.vigenciaCotizacion || 0,
+            periodo: jardin.periodo || { desde: '01-01', hasta: '31-12' },
         };
 
         return { status: 200, jsonBody: { vm } };

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +16,11 @@ import { CREAR_JARDIN_DEFAULT, CrearJardinForm } from './crear-jardin.types';
 import { crearJardinSchema } from './crear-jardin.schema';
 import { Errores } from '../../../../lib/components/errores/errores';
 import { environment } from '../../../../environments/environment';
+
+const NOMBRES_MESES = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
 
 @Component({
   selector: 'app-crear-jardin',
@@ -45,6 +50,79 @@ export class CrearJardin {
 
   form = form(this.model, crearJardinSchema);
 
+  // Opciones de selección para el periodo
+  dias = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  mesesInicio = NOMBRES_MESES.map((nombre, index) => ({
+    valor: index + 1,
+    nombre: `${String(index + 1).padStart(2, '0')} - ${nombre}`
+  }));
+
+  mesesFin = [
+    ...NOMBRES_MESES.map((nombre, index) => ({
+      valor: index + 1,
+      nombre: `${String(index + 1).padStart(2, '0')} - ${nombre}`
+    })),
+    ...NOMBRES_MESES.map((nombre, index) => ({
+      valor: index + 13,
+      nombre: `${String(index + 1).padStart(2, '0')} - ${nombre} (Año Siguiente)`
+    }))
+  ];
+
+  // Estado interno para armar periodo (desde/hasta)
+  diaDesde = signal<number>(1);
+  mesDesde = signal<number>(1);
+  diaHasta = signal<number>(31);
+  mesHasta = signal<number>(12);
+
+  // Indica si el periodo se traslapa al año siguiente
+  esPeriodoTraslapado = computed(() => {
+    return this.mesHasta() > 12 || this.mesHasta() < this.mesDesde();
+  });
+
+  actualizarPeriodoDesde() {
+    const dd = String(this.diaDesde()).padStart(2, '0');
+    const mm = String(this.mesDesde()).padStart(2, '0');
+    this.form.periodoDesde().value.set(`${dd}-${mm}`);
+  }
+
+  actualizarPeriodoHasta() {
+    const dd = String(this.diaHasta()).padStart(2, '0');
+    const mesReal = ((this.mesHasta() - 1) % 12) + 1;
+    const mm = String(mesReal).padStart(2, '0');
+    this.form.periodoHasta().value.set(`${dd}-${mm}`);
+  }
+
+  onDiaDesdeChange(dia: number) {
+    this.diaDesde.set(dia);
+    this.actualizarPeriodoDesde();
+  }
+
+  onMesDesdeChange(mes: number) {
+    this.mesDesde.set(mes);
+    this.actualizarPeriodoDesde();
+  }
+
+  onDiaHastaChange(dia: number) {
+    this.diaHasta.set(dia);
+    this.actualizarPeriodoHasta();
+  }
+
+  onMesHastaChange(mes: number) {
+    this.mesHasta.set(mes);
+    this.actualizarPeriodoHasta();
+  }
+
+  /**
+   * Helper utility para construir un objeto Date en TypeScript/JavaScript de forma transparente.
+   * En JS los meses inician en 0 (0 = Enero, 11 = Diciembre).
+   * Al usar meses continuos (ej. 12 = Enero año siguiente, 13 = Febrero año siguiente),
+   * el constructor `new Date(year, monthIndexContinuous, day)` realiza el desborde de año automáticamente.
+   */
+  crearFechaPeriodo(year: number, monthIndexContinuous: number, day: number): Date {
+    return new Date(year, monthIndexContinuous, day);
+  }
+
   generarSlug(nombre: string): string {
     return nombre
       .toLowerCase()
@@ -68,14 +146,32 @@ export class CrearJardin {
 
     this.cargando.set(true);
     try {
-      const payload = this.model();
+      const formValue = this.model();
+      const payload = {
+        id: formValue.id,
+        nombreComercial: formValue.nombreComercial,
+        razonSocial: formValue.razonSocial,
+        ruc: formValue.ruc,
+        correoFacturacion: formValue.correoFacturacion,
+        responsablePago: formValue.responsablePago,
+        moneda: formValue.moneda,
+        vigenciaCotizacion: formValue.vigenciaCotizacion,
+        periodo: {
+          desde: formValue.periodoDesde,
+          hasta: formValue.periodoHasta,
+        },
+        usuarioNombres: formValue.usuarioNombres,
+        usuarioApellidos: formValue.usuarioApellidos,
+        usuarioCorreo: formValue.usuarioCorreo,
+        usuarioClave: formValue.usuarioClave,
+      };
+
       await firstValueFrom(
         this.http.post(`${environment.api}adm/jardines`, payload)
       );
       this.router.navigate(['/jardines']);
     } catch (err: any) {
       console.error('Error al crear jardín:', err);
-      // Podríamos mostrar un mensaje de error o asignarlo al form si es necesario
     } finally {
       this.cargando.set(false);
     }

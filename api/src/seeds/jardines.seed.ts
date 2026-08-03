@@ -2,7 +2,8 @@ import { Jardin } from '../model/jardin';
 
 export const seedJardinInabif: Jardin = {
     id: "inabif",
-    creadoEn: new Date().toISOString(),
+    creado: new Date().toISOString(),
+    actualizado: null,
     tipo: "jardin",
     nombreComercial: "Inabif",
     razonSocial: "Institución Nacional de Bienestar Familiar",
@@ -39,11 +40,16 @@ export const seedJardinInabif: Jardin = {
         accent: "#22c55e"
     },
     vigenciaCotizacion: 30,
+    periodo: {
+        desde: "01-01",
+        hasta: "31-12"
+    }
 };
 
 export const seedJardinSanJuan: Jardin = {
     id: "sanjuan",
-    creadoEn: new Date().toISOString(),
+    creado: new Date().toISOString(),
+    actualizado: null,
     tipo: "jardin",
     nombreComercial: "San Juan",
     razonSocial: "Guardería San Juan SAC",
@@ -63,4 +69,8 @@ export const seedJardinSanJuan: Jardin = {
         accent: "#ec4899"
     },
     vigenciaCotizacion: 15,
+    periodo: {
+        desde: "01-01",
+        hasta: "31-12"
+    }
 };

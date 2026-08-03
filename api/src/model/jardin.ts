@@ -2,8 +2,8 @@ import { Intermediario } from './intermediario';
 
 export type Jardin = {
     id: string
-    creadoEn: string
-    actualizadoEn?: string
+    creado: string
+    actualizado: string | null
     tipo: 'jardin'
     nombreComercial: string
     razonSocial: string
@@ -21,6 +21,11 @@ export type Jardin = {
         primary: string;
         secondary: string;
         accent: string;
-    },
-    vigenciaCotizacion: number,
+    }
+    vigenciaCotizacion: number
+    periodo: {
+        desde: string
+        hasta: string
+    }
 }
+

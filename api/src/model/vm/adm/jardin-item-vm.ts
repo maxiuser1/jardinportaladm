@@ -5,5 +5,5 @@ export type JardinItemVm = {
     ruc: string;
     planVigente: string;
     estado: 'ACTIVO' | 'SUSPENDIDO' | 'DEMO';
-    creadoEn: string;
+    creado: string;
 }

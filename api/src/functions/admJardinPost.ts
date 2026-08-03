@@ -21,6 +21,7 @@ export async function admJardinPost(
         const vm = (await request.json()) as JardinPostVm;
         if (
             !vm.id || !vm.nombreComercial || !vm.razonSocial || !vm.ruc || !vm.correoFacturacion || !vm.responsablePago || !vm.moneda || vm.vigenciaCotizacion === undefined ||
+            !vm.periodo || !vm.periodo.desde || !vm.periodo.hasta ||
             !vm.usuarioNombres || !vm.usuarioApellidos || !vm.usuarioCorreo || !vm.usuarioClave
         ) {
             return { status: 400, jsonBody: { error: 'Faltan campos obligatorios' } };
@@ -48,7 +49,8 @@ export async function admJardinPost(
 
         const nuevoJardin: Jardin = {
             id: vm.id,
-            creadoEn: new Date().toISOString(),
+            creado: new Date().toISOString(),
+            actualizado: null,
             tipo: 'jardin',
             nombreComercial: vm.nombreComercial,
             razonSocial: vm.razonSocial,
@@ -62,6 +64,7 @@ export async function admJardinPost(
             moneda: vm.moneda,
             intermediarios: [],
             vigenciaCotizacion: vm.vigenciaCotizacion,
+            periodo: vm.periodo,
         };
 
         const nuevoUsuario: Usuario = {

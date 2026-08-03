@@ -37,7 +37,8 @@ export async function admJardinPatch(
         if (vm.responsablePago !== undefined) existingJardin.responsablePago = vm.responsablePago;
         if (vm.moneda !== undefined) existingJardin.moneda = vm.moneda;
         if (vm.vigenciaCotizacion !== undefined) existingJardin.vigenciaCotizacion = vm.vigenciaCotizacion;
-        existingJardin.actualizadoEn = new Date().toISOString();
+        if (vm.periodo !== undefined) existingJardin.periodo = vm.periodo;
+        existingJardin.actualizado = new Date().toISOString();
 
         await container.item(id, id).replace(existingJardin);
 

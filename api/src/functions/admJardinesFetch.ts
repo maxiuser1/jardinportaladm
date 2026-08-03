@@ -27,7 +27,7 @@ export async function admJardinesFetch(
             ruc: jardin.ruc,
             planVigente: jardin.planVigente,
             estado: jardin.estado,
-            creadoEn: jardin.creadoEn,
+            creado: jardin.creado || (jardin as any).creadoEn || new Date().toISOString(),
         }));
 
         return { status: 200, jsonBody: vms };

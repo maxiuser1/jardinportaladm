@@ -7,6 +7,10 @@ export type JardinPostVm = {
     responsablePago: string;
     moneda: 'CLP' | 'UF';
     vigenciaCotizacion: number;
+    periodo: {
+        desde: string;
+        hasta: string;
+    };
     usuarioNombres: string;
     usuarioApellidos: string;
     usuarioCorreo: string;

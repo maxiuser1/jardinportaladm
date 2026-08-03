@@ -2,8 +2,8 @@ import { Intermediario } from '../../intermediario';
 
 export type JardinDetalleVm = {
     id: string;
-    creadoEn: string;
-    actualizadoEn: string | null;
+    creado: string;
+    actualizado: string | null;
     nombreComercial: string;
     razonSocial: string;
     ruc: string;
@@ -22,4 +22,8 @@ export type JardinDetalleVm = {
         accent: string;
     } | null;
     vigenciaCotizacion: number;
+    periodo: {
+        desde: string;
+        hasta: string;
+    };
 }
