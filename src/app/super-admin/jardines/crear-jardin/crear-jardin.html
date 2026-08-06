@@ -36,6 +36,12 @@
             <mat-hint>Se genera automáticamente a partir del nombre comercial.</mat-hint>
           </mat-form-field>
 
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre de la Primera Sucursal</mat-label>
+            <input matInput [formField]="form.nombreSucursal" placeholder="Ej. Sucursal Principal Jardín San Nicolas" />
+            <mat-error errores [fieldState]="form.nombreSucursal()"></mat-error>
+          </mat-form-field>
+
           <!-- Datos de Facturación -->
           <div class="section-title-container">
             <h2 class="form-section-title">Datos de Facturación</h2>
@@ -64,6 +70,48 @@
             <input matInput [formField]="form.responsablePago" placeholder="Ej. Administración / Director" />
             <mat-error errores [fieldState]="form.responsablePago()"></mat-error>
           </mat-form-field>
+
+          <!-- Marca y Estilos -->
+          <div class="section-title-container">
+            <h2 class="form-section-title">Marca y Personalización de Estilos</h2>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>URL del Logo (Imagen)</mat-label>
+            <input matInput type="url" [formField]="form.estilosRutaLogo" placeholder="https://ejemplo.com/logo.png" />
+            <mat-icon matSuffix>image</mat-icon>
+            <mat-error errores [fieldState]="form.estilosRutaLogo()"></mat-error>
+            <mat-hint>Ingresa la URL pública de la imagen del logo del jardín.</mat-hint>
+          </mat-form-field>
+
+          <div class="colors-container full-width">
+            <div class="color-picker-item">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Color Primario</mat-label>
+                <input matInput [formField]="form.estilosPrimary" placeholder="#4f46e5" />
+                <input matPrefix type="color" class="color-picker-input" [value]="form.estilosPrimary().value()" (input)="onColorChange('estilosPrimary', $event)" />
+                <mat-error errores [fieldState]="form.estilosPrimary()"></mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="color-picker-item">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Color Secundario</mat-label>
+                <input matInput [formField]="form.estilosSecondary" placeholder="#0f172a" />
+                <input matPrefix type="color" class="color-picker-input" [value]="form.estilosSecondary().value()" (input)="onColorChange('estilosSecondary', $event)" />
+                <mat-error errores [fieldState]="form.estilosSecondary()"></mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="color-picker-item">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Color de Acento</mat-label>
+                <input matInput [formField]="form.estilosAccent" placeholder="#22c55e" />
+                <input matPrefix type="color" class="color-picker-input" [value]="form.estilosAccent().value()" (input)="onColorChange('estilosAccent', $event)" />
+                <mat-error errores [fieldState]="form.estilosAccent()"></mat-error>
+              </mat-form-field>
+            </div>
+          </div>
 
           <!-- Configuración -->
           <div class="section-title-container">

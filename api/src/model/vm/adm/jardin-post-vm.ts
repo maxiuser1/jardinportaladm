@@ -1,6 +1,7 @@
 export type JardinPostVm = {
     id: string;
     nombreComercial: string;
+    nombreSucursal: string;
     razonSocial: string;
     ruc: string;
     correoFacturacion: string;
@@ -15,4 +16,10 @@ export type JardinPostVm = {
     usuarioApellidos: string;
     usuarioCorreo: string;
     usuarioClave: string;
+    estilos: {
+        rutaLogo: string;
+        primary: string;
+        secondary: string;
+        accent: string;
+    } | null;
 }

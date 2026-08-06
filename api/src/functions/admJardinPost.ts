@@ -6,6 +6,7 @@ import { Jardin } from '../model/jardin';
 import { JardinPostVm } from '../model/vm/adm/jardin-post-vm';
 import { Usuario } from '../model/usuario';
 import { Secuencia } from '../model/secuencia';
+import { Sucursal } from '../model/sucursal';
 import { randomUUID } from 'crypto';
 
 export async function admJardinPost(
@@ -47,6 +48,29 @@ export async function admJardinPost(
             return { status: 409, jsonBody: { error: 'Ya existe un usuario con ese correo electrónico' } };
         }
 
+        const sucursalId = `suc-${randomUUID()}`;
+        const nombreSucursal = vm.nombreSucursal?.trim() || `Sucursal Principal ${vm.nombreComercial}`;
+
+        const nuevaSucursal: Sucursal = {
+            id: sucursalId,
+            tenant: vm.id,
+            tipo: 'sucursal',
+            nombre: nombreSucursal,
+            direccion: {
+                region: '',
+                comuna: '',
+                calle: '',
+                numero: '',
+                interior: '',
+            },
+            niveles: [],
+            jornadas: [],
+            salas: [],
+            servicios: [],
+            creado: new Date().toISOString(),
+            actualizado: null,
+        };
+
         const nuevoJardin: Jardin = {
             id: vm.id,
             creado: new Date().toISOString(),
@@ -63,6 +87,7 @@ export async function admJardinPost(
             estado: 'DEMO',
             moneda: vm.moneda,
             intermediarios: [],
+            estilos: vm.estilos || undefined,
             vigenciaCotizacion: vm.vigenciaCotizacion,
             periodo: vm.periodo,
         };
@@ -73,7 +98,8 @@ export async function admJardinPost(
             tipo: 'usuario',
             nombres: vm.usuarioNombres,
             apellidos: vm.usuarioApellidos,
-            sucursales: [],
+            sucursalDefectoId: sucursalId,
+            sucursales: [{ id: sucursalId, nombre: nombreSucursal }],
             contacto: {
                 correo: vm.usuarioCorreo.toLowerCase().trim(),
             },
@@ -99,6 +125,8 @@ export async function admJardinPost(
             va: 0,
         };
 
+        const sucursalContainer = database.container(Contenedores.SUCURSALES);
+        await sucursalContainer.items.create(nuevaSucursal);
         await container.items.create(nuevoJardin);
         await userContainer.items.create(nuevoUsuario);
         await secuenciasContainer.items.create(secuenciaMatriculas);

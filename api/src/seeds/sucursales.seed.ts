@@ -10,7 +10,8 @@ export const serviciosComunes: Servicio[] = [
 export const seedSucursalBrillantes: Sucursal = {
     id: "brillantes",
     tenant: "inabif",
-    creadoEn: new Date().toISOString(),
+    creado: new Date().toISOString(),
+    actualizado: null,
     tipo: "sucursal",
     nombre: "Brillantes",
     direccion: {
@@ -42,7 +43,8 @@ export const seedSucursalBrillantes: Sucursal = {
 export const seedSucursalDiamantes: Sucursal = {
     id: "diamantes",
     tenant: "inabif",
-    creadoEn: new Date().toISOString(),
+    creado: new Date().toISOString(),
+    actualizado: null,
     tipo: "sucursal",
     nombre: "Diamantes",
     direccion: {
@@ -74,7 +76,8 @@ export const seedSucursalDiamantes: Sucursal = {
 export const seedSucursalPrincipalSJ: Sucursal = {
     id: "principal",
     tenant: "sanjuan",
-    creadoEn: new Date().toISOString(),
+    creado: new Date().toISOString(),
+    actualizado: null,
     tipo: "sucursal",
     nombre: "Sede Principal San Juan",
     direccion: {

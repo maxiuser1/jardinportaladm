@@ -157,3 +157,41 @@ mat-progress-bar {
     margin-left: 4px;
   }
 }
+
+.colors-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+
+  @media (min-width: 520px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.color-picker-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 8px;
+  background: transparent;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-color-swatch {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+  }
+
+  &::-moz-color-swatch {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+  }
+}

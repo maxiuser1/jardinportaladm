@@ -133,8 +133,20 @@ export class CrearJardin {
 
   onNombreInput(event: Event) {
     const input = event.target as HTMLInputElement;
-    const slug = this.generarSlug(input.value);
+    const nombre = input.value;
+    const slug = this.generarSlug(nombre);
     this.form.id().value.set(slug);
+
+    const currentSucursal = this.form.nombreSucursal().value();
+    if (!currentSucursal || currentSucursal.startsWith('Sucursal Principal')) {
+      const defaultSucursal = nombre.trim() ? `Sucursal Principal ${nombre.trim()}` : '';
+      this.form.nombreSucursal().value.set(defaultSucursal);
+    }
+  }
+
+  onColorChange(field: 'estilosPrimary' | 'estilosSecondary' | 'estilosAccent', event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.form[field]().value.set(input.value);
   }
 
   async onSubmit(event: Event) {
@@ -150,6 +162,7 @@ export class CrearJardin {
       const payload = {
         id: formValue.id,
         nombreComercial: formValue.nombreComercial,
+        nombreSucursal: formValue.nombreSucursal,
         razonSocial: formValue.razonSocial,
         ruc: formValue.ruc,
         correoFacturacion: formValue.correoFacturacion,
@@ -164,6 +177,12 @@ export class CrearJardin {
         usuarioApellidos: formValue.usuarioApellidos,
         usuarioCorreo: formValue.usuarioCorreo,
         usuarioClave: formValue.usuarioClave,
+        estilos: {
+          rutaLogo: formValue.estilosRutaLogo.trim(),
+          primary: formValue.estilosPrimary || '#4f46e5',
+          secondary: formValue.estilosSecondary || '#0f172a',
+          accent: formValue.estilosAccent || '#22c55e',
+        },
       };
 
       await firstValueFrom(

@@ -1,6 +1,7 @@
 export type CrearJardinForm = {
   id: string;
   nombreComercial: string;
+  nombreSucursal: string;
   razonSocial: string;
   ruc: string;
   correoFacturacion: string;
@@ -13,11 +14,16 @@ export type CrearJardinForm = {
   usuarioApellidos: string;
   usuarioCorreo: string;
   usuarioClave: string;
+  estilosRutaLogo: string;
+  estilosPrimary: string;
+  estilosSecondary: string;
+  estilosAccent: string;
 };
 
 export const CREAR_JARDIN_DEFAULT: CrearJardinForm = {
   id: '',
   nombreComercial: '',
+  nombreSucursal: '',
   razonSocial: '',
   ruc: '',
   correoFacturacion: '',
@@ -30,4 +36,8 @@ export const CREAR_JARDIN_DEFAULT: CrearJardinForm = {
   usuarioApellidos: '',
   usuarioCorreo: '',
   usuarioClave: '',
+  estilosRutaLogo: '',
+  estilosPrimary: '#4f46e5',
+  estilosSecondary: '#0f172a',
+  estilosAccent: '#22c55e',
 };
