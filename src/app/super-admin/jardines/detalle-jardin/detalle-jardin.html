@@ -63,6 +63,10 @@
               <span class="info-value">{{ vm.vigenciaCotizacion }} días</span>
             </div>
             <div class="info-item">
+              <span class="info-label">Código Autorización Descuento</span>
+              <span class="info-value monospace">{{ vm.codigoAutorizacionDescuento || '-' }}</span>
+            </div>
+            <div class="info-item">
               <span class="info-label">Periodo Operativo</span>
               <span class="info-value bold">{{ vm.periodo ? (vm.periodo.desde + ' al ' + vm.periodo.hasta) : '01-01 al 31-12' }}</span>
             </div>

@@ -10,4 +10,5 @@ export type JardinPatchVm = {
         desde: string;
         hasta: string;
     };
+    codigoAutorizacionDescuento?: string | null;
 }

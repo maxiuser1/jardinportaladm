@@ -153,6 +153,7 @@ export class EditarJardin implements OnInit {
           correoFacturacion: vm.correoFacturacion,
           responsablePago: vm.responsablePago,
           moneda: vm.moneda,
+          codigoAutorizacionDescuento: vm.codigoAutorizacionDescuento || '',
           vigenciaCotizacion: vm.vigenciaCotizacion,
           periodoDesde,
           periodoHasta,
@@ -182,6 +183,7 @@ export class EditarJardin implements OnInit {
         correoFacturacion: raw.correoFacturacion,
         responsablePago: raw.responsablePago,
         moneda: raw.moneda,
+        codigoAutorizacionDescuento: raw.codigoAutorizacionDescuento.trim(),
         vigenciaCotizacion: raw.vigenciaCotizacion,
         periodo: {
           desde: raw.periodoDesde,

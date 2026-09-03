@@ -168,6 +168,7 @@ export class CrearJardin {
         correoFacturacion: formValue.correoFacturacion,
         responsablePago: formValue.responsablePago,
         moneda: formValue.moneda,
+        codigoAutorizacionDescuento: formValue.codigoAutorizacionDescuento.trim(),
         vigenciaCotizacion: formValue.vigenciaCotizacion,
         periodo: {
           desde: formValue.periodoDesde,

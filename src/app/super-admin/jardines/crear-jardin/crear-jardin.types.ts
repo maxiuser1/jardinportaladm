@@ -7,6 +7,7 @@ export type CrearJardinForm = {
   correoFacturacion: string;
   responsablePago: string;
   moneda: 'CLP' | 'UF' | '';
+  codigoAutorizacionDescuento: string;
   vigenciaCotizacion: number;
   periodoDesde: string;
   periodoHasta: string;
@@ -29,6 +30,7 @@ export const CREAR_JARDIN_DEFAULT: CrearJardinForm = {
   correoFacturacion: '',
   responsablePago: '',
   moneda: '',
+  codigoAutorizacionDescuento: '',
   vigenciaCotizacion: 15,
   periodoDesde: '01-01',
   periodoHasta: '31-12',

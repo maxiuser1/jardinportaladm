@@ -15,6 +15,7 @@ export const seedJardinInabif: Jardin = {
     fechaFinPlan: "2027-01-01T23:59:59Z",
     estado: "ACTIVO",
     moneda: "UF",
+    codigoAutorizacionDescuento: "123456",
     intermediarios: [
         {
             id: "int-telefonica",
@@ -61,6 +62,7 @@ export const seedJardinSanJuan: Jardin = {
     fechaFinPlan: "2027-01-01T23:59:59Z",
     estado: "ACTIVO",
     moneda: "CLP",
+    codigoAutorizacionDescuento: "123456",
     intermediarios: [], // Sin convenios empresariales
     estilos: {
         rutaLogo: "/assets/logos/sanjuan.png",

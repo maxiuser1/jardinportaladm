@@ -133,6 +133,13 @@
             <mat-error errores [fieldState]="form.vigenciaCotizacion()"></mat-error>
           </mat-form-field>
 
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Código Autorización Descuento</mat-label>
+            <input matInput [formField]="form.codigoAutorizacionDescuento" placeholder="Ej. 123456" autocomplete="off" />
+            <mat-error errores [fieldState]="form.codigoAutorizacionDescuento()"></mat-error>
+            <mat-hint>Clave de 6 dígitos para autorizar descuentos.</mat-hint>
+          </mat-form-field>
+
           <!-- Periodo Lectivo / Operativo -->
           <div class="section-title-container">
             <h2 class="form-section-title">Periodo de Operación / Lectivo</h2>

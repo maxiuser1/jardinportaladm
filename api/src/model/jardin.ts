@@ -15,6 +15,7 @@ export type Jardin = {
     fechaFinPlan: string
     estado: 'ACTIVO' | 'SUSPENDIDO' | 'DEMO'
     moneda: 'CLP' | 'UF'
+    codigoAutorizacionDescuento: string | null
     intermediarios: Intermediario[]
     estilos?: {
         rutaLogo: string;

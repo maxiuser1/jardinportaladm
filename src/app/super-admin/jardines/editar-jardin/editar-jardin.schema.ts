@@ -1,4 +1,4 @@
-import { required, email } from '@angular/forms/signals';
+import { required, email, pattern } from '@angular/forms/signals';
 
 export const editarJardinSchema = (sp: any) => {
   required(sp.nombreComercial, { message: 'El nombre comercial es requerido' });
@@ -8,6 +8,8 @@ export const editarJardinSchema = (sp: any) => {
   email(sp.correoFacturacion, { message: 'Debe ser un correo válido' });
   required(sp.responsablePago, { message: 'El responsable de pago es requerido' });
   required(sp.moneda, { message: 'La moneda es requerida' });
+  required(sp.codigoAutorizacionDescuento, { message: 'El código de autorización es requerido' });
+  pattern(sp.codigoAutorizacionDescuento, /^\d{6}$/, { message: 'El código debe tener 6 dígitos numéricos' });
   required(sp.vigenciaCotizacion, { message: 'La vigencia de cotización es requerida' });
   required(sp.periodoDesde, { message: 'El periodo de inicio es requerido' });
   required(sp.periodoHasta, { message: 'El periodo de fin es requerido' });

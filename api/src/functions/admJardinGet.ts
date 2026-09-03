@@ -53,6 +53,7 @@ export async function admJardinGet(
             } : null,
             vigenciaCotizacion: jardin.vigenciaCotizacion || 0,
             periodo: jardin.periodo || { desde: '01-01', hasta: '31-12' },
+            codigoAutorizacionDescuento: jardin.codigoAutorizacionDescuento ?? null,
         };
 
         return { status: 200, jsonBody: { vm } };

@@ -38,6 +38,9 @@ export async function admJardinPatch(
         if (vm.moneda !== undefined) existingJardin.moneda = vm.moneda;
         if (vm.vigenciaCotizacion !== undefined) existingJardin.vigenciaCotizacion = vm.vigenciaCotizacion;
         if (vm.periodo !== undefined) existingJardin.periodo = vm.periodo;
+        if (vm.codigoAutorizacionDescuento !== undefined) {
+            existingJardin.codigoAutorizacionDescuento = vm.codigoAutorizacionDescuento ? vm.codigoAutorizacionDescuento.trim() : null;
+        }
         existingJardin.actualizado = new Date().toISOString();
 
         await container.item(id, id).replace(existingJardin);

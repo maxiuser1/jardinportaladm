@@ -21,7 +21,7 @@ export async function admJardinPost(
 
         const vm = (await request.json()) as JardinPostVm;
         if (
-            !vm.id || !vm.nombreComercial || !vm.razonSocial || !vm.ruc || !vm.correoFacturacion || !vm.responsablePago || !vm.moneda || vm.vigenciaCotizacion === undefined ||
+            !vm.id || !vm.nombreComercial || !vm.razonSocial || !vm.ruc || !vm.correoFacturacion || !vm.responsablePago || !vm.moneda || !vm.codigoAutorizacionDescuento || vm.vigenciaCotizacion === undefined ||
             !vm.periodo || !vm.periodo.desde || !vm.periodo.hasta ||
             !vm.usuarioNombres || !vm.usuarioApellidos || !vm.usuarioCorreo || !vm.usuarioClave
         ) {
@@ -86,6 +86,7 @@ export async function admJardinPost(
             fechaFinPlan: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
             estado: 'DEMO',
             moneda: vm.moneda,
+            codigoAutorizacionDescuento: vm.codigoAutorizacionDescuento ? vm.codigoAutorizacionDescuento.trim() : null,
             intermediarios: [],
             estilos: vm.estilos || undefined,
             vigenciaCotizacion: vm.vigenciaCotizacion,

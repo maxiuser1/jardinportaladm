@@ -26,4 +26,5 @@ export type JardinDetalleVm = {
         desde: string;
         hasta: string;
     };
+    codigoAutorizacionDescuento: string | null;
 }
